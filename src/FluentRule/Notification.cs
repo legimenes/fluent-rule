@@ -1,4 +1,4 @@
-﻿namespace FluentNotification;
+﻿namespace FluentRule;
 public class Notification(string? key, string message)
 {
     public string? Key { get => key; }

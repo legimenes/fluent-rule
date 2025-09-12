@@ -1,82 +1,42 @@
 ﻿using System.Linq.Expressions;
 
-namespace FluentNotification;
-public class PropertyRule<T>
+namespace FluentRule;
+public class PropertyRule<T, TProperty, TSelf>
+    where TSelf : PropertyRule<T, TProperty, TSelf>
 {
-    private readonly Contract<T> _parent;
-    private readonly T _instance;
-    private readonly string _propertyName;
-    private readonly Func<T, object> _accessor;
-    private Func<T, bool> _condition;
+    protected readonly string _propertyName;
+    protected readonly Func<T, TProperty> _accessor;
+    protected readonly Contract<T> _parent;
+    protected Func<T, bool>? _condition;
 
-    public PropertyRule(Contract<T> parent, T instance, Expression<Func<T, object>> property)
+    public PropertyRule(string propertyName, Func<T, TProperty> accessor, Contract<T> parent)
     {
+        _propertyName = propertyName;
+        _accessor = accessor;
         _parent = parent;
-        _instance = instance;
-        _propertyName = GetPropertyName(property);
-        _accessor = property.Compile();
-        _condition = _ => true; // padrão: sempre validar
     }
 
-    private object Value => _accessor(_instance);
+    protected bool ShouldValidate()
+        => _condition == null || _condition(_parent.Instance);
 
-    private bool ShouldValidate() => _condition(_instance);
-
-    public PropertyRule<T> When(Func<T, bool> condition)
+    public TSelf When(Expression<Func<T, bool>> condition)
     {
-        _condition = condition;
-        return this;
+        _condition = condition.Compile();
+        return (TSelf)this; // mantém o tipo concreto
     }
 
-    public PropertyRule<T> IsNotNullOrEmpty(string message)
+    private static string GetPropertyName<T, TProperty>(Expression<Func<T, TProperty>> expression)
     {
-        if (ShouldValidate())
-        {
-            if (Value is not string str || string.IsNullOrWhiteSpace(str))
-                _parent.AddNotification(_propertyName, message);
-        }
-        return this;
-    }
+        Expression body = expression.Body;
 
-    public PropertyRule<T> IsEmail(string message)
-    {
-        if (ShouldValidate())
-        {
-            if (Value is not string str || string.IsNullOrWhiteSpace(str) || !str.Contains("@"))
-                _parent.AddNotification(_propertyName, message);
-        }
-        return this;
-    }
+        // trata conversões (ex.: object boxing)
+        if (body is UnaryExpression unary && unary.Operand is MemberExpression)
+            body = unary.Operand;
 
-    public PropertyRule<T> IsGreaterThan(decimal comparer, string message)
-    {
-        if (ShouldValidate())
-        {
-            if (Value is not decimal dec || dec <= comparer)
-                _parent.AddNotification(_propertyName, message);
-        }
-        return this;
-    }
-
-    public PropertyRule<T> HasMinLength(int length, string message)
-    {
-        if (ShouldValidate())
-        {
-            if (Value is not string str || str.Length < length)
-                _parent.AddNotification(_propertyName, message);
-        }
-        return this;
-    }
-
-    private static string GetPropertyName(Expression<Func<T, object>> expression)
-    {
-        if (expression.Body is MemberExpression member)
+        if (body is MemberExpression member)
             return member.Member.Name;
 
-        if (expression.Body is UnaryExpression unary && unary.Operand is MemberExpression operand)
-            return operand.Member.Name;
-
-        throw new InvalidOperationException("Não foi possível obter o nome da propriedade.");
+        throw new InvalidOperationException("Não foi possível obter o nome da propriedade da expressão informada.");
     }
 
     private static object GetPropertyValue<T>(T instance, Expression<Func<T, object>> expression)

@@ -1,27 +1,32 @@
 ﻿using System.Linq.Expressions;
 
-namespace FluentNotification;
+namespace FluentRule;
 public class Contract<T>
 {
-    private readonly T _instance;
+    public T Instance { get; }
     private readonly List<Notification> _notifications;
 
     public Contract(T instance)
     {
-        _instance = instance;
+        Instance = instance;
         _notifications = [];
     }
 
     public IReadOnlyCollection<Notification> Notifications => _notifications;
 
-    internal void AddNotification(string key, string message)
+    internal void AddNotification(string property, string message)
+            => _notifications.Add(new Notification(property, message));
+
+    public StringPropertyRule<T> RuleFor(Expression<Func<T, string>> expression)
     {
-        _notifications.Add(new Notification(key, message));
+        var propertyName = ((MemberExpression)expression.Body).Member.Name;
+        return new StringPropertyRule<T>(propertyName, expression.Compile(), this);
     }
 
-    public PropertyRule<T> RuleFor(Expression<Func<T, object>> property)
+    public DecimalPropertyRule<T> RuleFor(Expression<Func<T, int>> expression)
     {
-        return new PropertyRule<T>(this, _instance, property);
+        var propertyName = ((MemberExpression)expression.Body).Member.Name;
+        return new DecimalPropertyRule<T>(propertyName, expression.Compile(), this);
     }
 
     public IDictionary<string, List<string>> GroupedNotifications()

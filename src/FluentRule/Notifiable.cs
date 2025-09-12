@@ -1,4 +1,4 @@
-﻿namespace FluentNotification;
+﻿namespace FluentRule;
 public abstract class Notifiable : IDisposable
 {
     private readonly List<Notification> _notifications;

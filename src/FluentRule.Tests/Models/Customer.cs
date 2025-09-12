@@ -1,6 +1,4 @@
-﻿using FluentNotification;
-
-namespace FluentRule.Tests.Models;
+﻿namespace FluentRule.Tests.Models;
 public class Customer(
     Guid id,
     string fullName,
@@ -27,7 +25,7 @@ public class Customer(
 
         // (2)
         Contract<Customer> contract = new(customer);
-        contract.RuleFor(p => p.FullName).IsNotNullOrEmpty("Fullname is required");
+        contract.RuleFor(p => p.FullName).IsNotNullOrEmpty("Fullname is required").HasMinLength(3, "Fullname invalid min length");
         contract.RuleFor(p => p.Document).When(p => p.Document.StartsWith("1")).HasMinLength(15, "Invalid Document");
 
         customer.AddNotifications(contract.Notifications);
