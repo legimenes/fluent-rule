@@ -1,11 +1,12 @@
 ﻿namespace FluentRule;
 public abstract class Notifiable : IDisposable
 {
-    private readonly List<Notification> _notifications;
-
     protected Notifiable() { _notifications = []; }
 
-    public IReadOnlyCollection<Notification> Notifications => _notifications;
+    private readonly List<Notification> _notifications;
+    public IReadOnlyCollection<Notification> Notifications=> _notifications;
+
+    public bool IsValid => _notifications.Count == 0;
 
     /// <summary>
     /// Add a notification directly with a message
@@ -41,12 +42,9 @@ public abstract class Notifiable : IDisposable
         _notifications.Clear();
     }
 
-    public bool IsValid => _notifications.Count == 0;
-
     public void Dispose()
     {
         _notifications.Clear();
-
         GC.SuppressFinalize(this);
     }
 }

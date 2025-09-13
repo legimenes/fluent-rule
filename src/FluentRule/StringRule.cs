@@ -1,13 +1,13 @@
-﻿using FluentRule;
-using System.Text.RegularExpressions;
+﻿using System.Text.RegularExpressions;
 
 namespace FluentRule;
-public class StringPropertyRule<T> : PropertyRule<T, string, StringPropertyRule<T>>
+public class StringRule<T>(
+    string propertyName,
+    Func<T, string> accessor,
+    Contract<T> parent)
+    : PropertyRule<T, string, StringRule<T>>(propertyName, accessor, parent)
 {
-    public StringPropertyRule(string propertyName, Func<T, string> accessor, Contract<T> parent)
-        : base(propertyName, accessor, parent) { }
-
-    public StringPropertyRule<T> IsNotNullOrEmpty(string message)
+    public StringRule<T> IsNotNullOrEmpty(string message)
     {
         if (ShouldValidate())
         {
@@ -18,7 +18,7 @@ public class StringPropertyRule<T> : PropertyRule<T, string, StringPropertyRule<
         return this;
     }
 
-    public StringPropertyRule<T> HasMinLength(int minLength, string message)
+    public StringRule<T> HasMinLength(int minLength, string message)
     {
         if (ShouldValidate())
         {
@@ -29,7 +29,7 @@ public class StringPropertyRule<T> : PropertyRule<T, string, StringPropertyRule<
         return this;
     }
 
-    public StringPropertyRule<T> IsEmail(string message)
+    public StringRule<T> IsEmail(string message)
     {
         if (ShouldValidate())
         {
