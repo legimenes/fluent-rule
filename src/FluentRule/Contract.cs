@@ -15,10 +15,16 @@ public class Contract<T>(T instance)
         return new StringRule<T>(propertyName, expression.Compile(), this);
     }
 
-    public DecimalRule<T> RuleFor(Expression<Func<T, int>> expression)
+    public DecimalRule<T> RuleFor(Expression<Func<T, decimal>> expression)
     {
         var propertyName = ((MemberExpression)expression.Body).Member.Name;
         return new DecimalRule<T>(propertyName, expression.Compile(), this);
+    }
+
+    public IntRule<T> RuleFor(Expression<Func<T, int>> expression)
+    {
+        var propertyName = ((MemberExpression)expression.Body).Member.Name;
+        return new IntRule<T>(propertyName, expression.Compile(), this);
     }
 
     //public IDictionary<string, List<string>> GroupedNotifications()

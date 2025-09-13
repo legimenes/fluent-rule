@@ -1,11 +1,11 @@
 ﻿namespace FluentRule;
-public class DecimalRule<T>(
+public class IntRule<T>(
     string propertyName,
-    Func<T, decimal> accessor,
+    Func<T, int> accessor,
     Contract<T> parent)
-    : PropertyRule<T, decimal, DecimalRule<T>>(propertyName, accessor, parent)
+    : PropertyRule<T, int, IntRule<T>>(propertyName, accessor, parent)
 {
-    public DecimalRule<T> IsGreaterThan(decimal min, string message)
+    public IntRule<T> IsGreaterThan(int min, string message)
     {
         if (ShouldValidate())
         {
