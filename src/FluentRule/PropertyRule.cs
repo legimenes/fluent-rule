@@ -12,27 +12,26 @@ public class PropertyRule<T, TProperty, TSelf>(
     protected readonly Contract<T> _parent = parent;
     protected Func<T, bool>? _condition;
 
-    public TSelf Satisfies(Func<TProperty, bool> predicate, string message)
-    {
-        if (ShouldValidate())
-        {
-            var value = _accessor(_parent.Instance);
-            if (!predicate(value))
-                _parent.AddNotification(_propertyName, message);
-        }
-        return (TSelf)this;
-    }
-
     public TSelf When(Expression<Func<T, bool>> condition)
     {
         _condition = condition.Compile();
         return (TSelf)this;
     }
 
-    protected bool ShouldValidate()
+    public bool ShouldValidate()
     {
         return _condition == null || _condition(_parent.Instance);
     }
+
+    public TProperty GetValue()
+    {
+        return _accessor(_parent.Instance);
+    }
+
+    public void AddNotification(string message)
+    {
+        _parent.AddNotification(_propertyName, message);
+    }        
 
     //private static string GetPropertyName<T, TProperty>(Expression<Func<T, TProperty>> expression)
     //{

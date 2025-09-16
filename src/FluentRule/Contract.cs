@@ -1,4 +1,5 @@
-﻿using System.Linq.Expressions;
+﻿using FluentRule.Rules;
+using System.Linq.Expressions;
 
 namespace FluentRule;
 public class Contract<T>(T instance)
@@ -8,12 +9,6 @@ public class Contract<T>(T instance)
     public T Instance { get; } = instance;
 
     public IReadOnlyCollection<Notification> Notifications => _notifications;
-
-    public StringRule<T> RuleFor(Expression<Func<T, string>> expression)
-    {
-        var propertyName = ((MemberExpression)expression.Body).Member.Name;
-        return new StringRule<T>(propertyName, expression.Compile(), this);
-    }
 
     public DecimalRule<T> RuleFor(Expression<Func<T, decimal>> expression)
     {
@@ -25,6 +20,12 @@ public class Contract<T>(T instance)
     {
         var propertyName = ((MemberExpression)expression.Body).Member.Name;
         return new IntRule<T>(propertyName, expression.Compile(), this);
+    }
+
+    public StringRule<T> RuleFor(Expression<Func<T, string>> expression)
+    {
+        var propertyName = ((MemberExpression)expression.Body).Member.Name;
+        return new StringRule<T>(propertyName, expression.Compile(), this);
     }
 
     //public IDictionary<string, List<string>> GroupedNotifications()
