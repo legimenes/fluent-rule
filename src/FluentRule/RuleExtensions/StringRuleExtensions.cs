@@ -51,7 +51,7 @@ public static class StringRuleExtensions
         return rule;
     }
 
-    public static StringRule<T> NotNullOrWhitespace<T>(this StringRule<T> rule, string message)
+    public static StringRule<T> NotNullOrWhiteSpace<T>(this StringRule<T> rule, string message)
     {
         if (rule.ShouldValidate())
         {
