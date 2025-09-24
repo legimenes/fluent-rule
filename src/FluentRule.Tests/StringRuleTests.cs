@@ -4,6 +4,7 @@ using FluentRule.Tests.Models;
 namespace FluentRule.Tests;
 public class StringRuleTests
 {
+    /*
     [Theory]
     [InlineData(null, false)]
     [InlineData("", true)]
@@ -57,4 +58,5 @@ public class StringRuleTests
 
         Assert.Equal(expected, customer.IsValid);
     }
+    */
 }

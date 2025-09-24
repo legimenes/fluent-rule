@@ -12,6 +12,8 @@ public class PropertyRule<T, TProperty, TSelf>(
     protected readonly Contract<T> _parent = parent;
     protected Func<T, bool>? _condition;
 
+    private Notification? _lastNotification;
+
     public TSelf When(Expression<Func<T, bool>> condition)
     {
         _condition = condition.Compile();
@@ -28,27 +30,18 @@ public class PropertyRule<T, TProperty, TSelf>(
         return _accessor(_parent.Instance);
     }
 
-    public void AddNotification(string message)
+    public TSelf WithMessage(string message)
     {
-        _parent.AddNotification(_propertyName, message);
-    }        
+        if (_lastNotification is not null)
+        {
+            _lastNotification.OverrideMessage(message);
+        }
+        return (TSelf)this;
+    }
 
-    //private static string GetPropertyName<T, TProperty>(Expression<Func<T, TProperty>> expression)
-    //{
-    //    Expression body = expression.Body;
-
-    //    if (body is UnaryExpression unary && unary.Operand is MemberExpression)
-    //        body = unary.Operand;
-
-    //    if (body is MemberExpression member)
-    //        return member.Member.Name;
-
-    //    throw new InvalidOperationException("Não foi possível obter o nome da propriedade da expressão informada.");
-    //}
-
-    //private static object GetPropertyValue<T>(T instance, Expression<Func<T, object>> expression)
-    //{
-    //    var func = expression.Compile();
-    //    return func(instance);
-    //}
+    public void AddNotification(string defaultMessage)
+    {
+        _lastNotification = new Notification(_propertyName, defaultMessage);
+        _parent.AddNotification(_lastNotification);
+    }
 }

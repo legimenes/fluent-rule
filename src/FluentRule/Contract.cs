@@ -39,4 +39,9 @@ public class Contract<T>(T instance)
     {
         _notifications.Add(new Notification(property, message));
     }
+
+    internal void AddNotification(Notification notification)
+    {
+        _notifications.Add(notification);
+    }
 }

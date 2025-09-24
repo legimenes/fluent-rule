@@ -30,9 +30,9 @@ public class Customer(
 
         // (2)
         Contract<Customer> contract = new(customer);
-        contract.RuleFor(p => p.FullName).NotNullOrEmpty("Fullname is required").HasMinLength(3, "Fullname invalid min length");
-        contract.RuleFor(p => p.Document).When(p => p.Document.StartsWith("1")).HasMinLength(15, "Invalid Document");
-        contract.RuleFor(p => p.PersonType).Satisfies(p => p > -1, "Invalid PersonType");
+        contract.RuleFor(p => p.FullName).NotNullOrEmpty().WithMessage("Fullname is required").HasMinLength(3);//.WithMessage("Fullname invalid min length");
+        contract.RuleFor(p => p.Document).When(p => p.Document.StartsWith("1")).HasMinLength(15).WithMessage("Invalid Document");
+        contract.RuleFor(p => p.PersonType).Satisfies(p => p > -1).WithMessage("Invalid PersonType");
 
         customer.AddNotifications(contract.Notifications);
 
