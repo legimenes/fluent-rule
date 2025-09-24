@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.31903.59
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FluentRule", "src\FluentRule\FluentRule.csproj", "{F7A22494-1D7E-4AC6-BC2A-B0633FC15099}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FluentRule.Tests", "src\FluentRule.Tests\FluentRule.Tests.csproj", "{D81A2034-6234-4C1F-AAAC-6DEC4B08CBD1}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{F7A22494-1D7E-4AC6-BC2A-B0633FC15099}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F7A22494-1D7E-4AC6-BC2A-B0633FC15099}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F7A22494-1D7E-4AC6-BC2A-B0633FC15099}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F7A22494-1D7E-4AC6-BC2A-B0633FC15099}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D81A2034-6234-4C1F-AAAC-6DEC4B08CBD1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D81A2034-6234-4C1F-AAAC-6DEC4B08CBD1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D81A2034-6234-4C1F-AAAC-6DEC4B08CBD1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D81A2034-6234-4C1F-AAAC-6DEC4B08CBD1}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {7F31C8FF-7ADF-43F2-BC15-13A09BB16D05}
+	EndGlobalSection
+EndGlobal
