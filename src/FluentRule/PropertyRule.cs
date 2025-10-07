@@ -39,9 +39,10 @@ public class PropertyRule<T, TProperty, TSelf>(
         return (TSelf)this;
     }
 
-    public void AddNotification(string defaultMessage)
+    public void AddNotification(string defaultMessage, Dictionary<string, object?>? placeholders = null)
     {
-        _lastNotification = new Notification(_propertyName, defaultMessage);
+        var value = GetValue();
+        _lastNotification = new Notification(_propertyName, defaultMessage, value, placeholders);
         _parent.AddNotification(_lastNotification);
     }
 }
