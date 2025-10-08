@@ -26,11 +26,11 @@ public class Customer(
         Customer customer = new(new Guid(), fullName, personType, document, age, originDate);
 
         // (1)
-        //customer.AddNotification("");
+        customer.AddNotification("Testando msg padrao");
 
         // (2)
         Contract<Customer> contract = new(customer);
-        contract.RuleFor(p => p.FullName).NotNullOrEmpty().HasMinLength(3);//.WithMessage("Fullname invalid min length");
+        contract.RuleFor(p => p.FullName).NotNullOrEmpty().WithMessage("Fullname is required. Actual is {Value}").HasMinLength(3);//.WithMessage("Fullname invalid min length");
         contract.RuleFor(p => p.Document).When(p => p.Document.StartsWith("1")).HasMinLength(15).WithMessage("Invalid Document");
         contract.RuleFor(p => p.PersonType).Satisfies(p => p > -1).WithMessage("Invalid PersonType");
 

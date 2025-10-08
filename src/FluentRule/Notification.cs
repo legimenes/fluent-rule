@@ -2,32 +2,47 @@
 public class Notification
 {
     public string? Key { get; }
-    public object? Value { get; }
-    
-    private string RawMessage { get; set; }
-    private readonly Dictionary<string, object?> _placeholders;
+    public object? Value { get; }    
+    public string Message { get => _message; }
 
-    public string Message => FormatMessage();
+    private string _message = string.Empty;
+    private readonly IReadOnlyDictionary<string, object?> _placeholders;
 
-    public Notification(string? key, string message, object? value = null, Dictionary<string, object?>? placeholders = null)
+    public Notification(
+        string message,
+        string? key = null,
+        object? value = null,
+        IDictionary<string, object?>? placeholders = null)
     {
         Key = key;
-        RawMessage = message;
         Value = value;
-        _placeholders = placeholders ?? [];
+        _placeholders = new Dictionary<string, object?>(placeholders ?? new Dictionary<string, object?>());
+        _message = FormatMessage(message);
     }
 
-    internal void OverrideMessage(string newMessage) => RawMessage = newMessage;
-
-    private string FormatMessage()
+    internal void OverrideMessage(string newMessage)
     {
-        var result = RawMessage
+        _message = FormatMessage(newMessage);
+    }
+
+    private string FormatMessage(string message)
+    {
+        if (string.IsNullOrWhiteSpace(message))
+            return string.Empty;
+
+        string formattedMessage = message
             .Replace("{PropertyName}", Key ?? string.Empty)
             .Replace("{Value}", Value?.ToString() ?? string.Empty);
 
-        foreach (var kv in _placeholders)
-            result = result.Replace("{" + kv.Key + "}", kv.Value?.ToString() ?? string.Empty);
+        foreach (var (placeholder, val) in _placeholders)
+        {
+            formattedMessage = formattedMessage.Replace(
+                "{" + placeholder + "}",
+                val?.ToString() ?? string.Empty,
+                StringComparison.OrdinalIgnoreCase
+            );
+        }
 
-        return result;
+        return formattedMessage;
     }
 }

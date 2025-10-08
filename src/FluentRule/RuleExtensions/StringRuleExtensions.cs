@@ -4,17 +4,6 @@ using System.Text.RegularExpressions;
 namespace FluentRule.RuleExtensions;
 public static class StringRuleExtensions
 {
-    //public static StringRule<T> HasMinLength<T>(this StringRule<T> rule, int minLength)
-    //{
-    //    if (rule.ShouldValidate())
-    //    {
-    //        var value = rule.GetValue();
-    //        if (string.IsNullOrEmpty(value) || value.Length < minLength)
-    //            rule.AddNotification("Valor mínimo inválido");
-    //    }
-    //    return rule;
-    //}
-
     public static StringRule<T> HasMinLength<T>(this StringRule<T> rule, int minLength)
     {
         if (rule.ShouldValidate())
@@ -58,17 +47,6 @@ public static class StringRuleExtensions
         }
         return rule;
     }
-
-    //public static StringRule<T> NotNullOrEmpty<T>(this StringRule<T> rule)
-    //{
-    //    if (rule.ShouldValidate())
-    //    {
-    //        string value = rule.GetValue();
-    //        if (string.IsNullOrEmpty(value))
-    //            rule.AddNotification("O valor não pode ser nulo ou vazio.");
-    //    }
-    //    return rule;
-    //}
 
     public static StringRule<T> NotNullOrEmpty<T>(this StringRule<T> rule)
     {

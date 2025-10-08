@@ -42,7 +42,7 @@ public class PropertyRule<T, TProperty, TSelf>(
     public void AddNotification(string defaultMessage, Dictionary<string, object?>? placeholders = null)
     {
         var value = GetValue();
-        _lastNotification = new Notification(_propertyName, defaultMessage, value, placeholders);
+        _lastNotification = new Notification(defaultMessage, _propertyName, value, placeholders);
         _parent.AddNotification(_lastNotification);
     }
 }

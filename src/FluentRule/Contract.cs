@@ -35,11 +35,6 @@ public class Contract<T>(T instance)
     //        .ToDictionary(g => g.Key, g => g.Select(n => n.Message).ToList());
     //}
 
-    internal void AddNotification(string property, string message)
-    {
-        _notifications.Add(new Notification(property, message));
-    }
-
     internal void AddNotification(Notification notification)
     {
         _notifications.Add(notification);

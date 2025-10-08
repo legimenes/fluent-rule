@@ -14,17 +14,7 @@ public abstract class Notifiable : IDisposable
     /// <param name="message">Custom error message to use when validation fails</param>
     public void AddNotification(string message)
     {
-        _notifications.Add(new Notification(null, message));
-    }
-
-    /// <summary>
-    /// Add a notification directly with key and message
-    /// </summary>
-    /// <param name="key">Key representing the context to validate</param>
-    /// <param name="message">Custom error message to use when validation fails</param>
-    public void AddNotification(string key, string message)
-    {
-        _notifications.Add(new Notification(key, message));
+        _notifications.Add(new Notification(message));
     }
 
     public void AddNotifications(Notifiable notifiableObject)
