@@ -1,4 +1,5 @@
-﻿using FluentRule.Rules;
+﻿using FluentRule.Localization;
+using FluentRule.Rules;
 using System.Text.RegularExpressions;
 
 namespace FluentRule.RuleExtensions;
@@ -43,7 +44,8 @@ public static class StringRuleExtensions
         {
             string value = rule.GetValue();
             if (value is null)
-                rule.AddNotification("O valor não pode ser nulo.");
+                //rule.AddNotification(MessageManager.Get("NotNull"));
+                rule.AddNotification(Messages.NotNull);
         }
         return rule;
     }
@@ -54,7 +56,8 @@ public static class StringRuleExtensions
         {
             var value = rule.GetValue();
             if (string.IsNullOrEmpty(value))
-                rule.AddNotification("{PropertyName} não pode ser nulo ou vazio. Valor atual: {Value}");
+                //rule.AddNotification(MessageManager.Get("NotNullOrEmpty"));
+                rule.AddNotification(Messages.NotNullOrEmpty);
         }
         return rule;
     }
