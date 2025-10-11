@@ -123,6 +123,9 @@
   <data name="MinimumLength" xml:space="preserve">
     <value>{PropertyName} value length must be at least {MinimumLength} characters. {TotalLength} characters were entered.</value>
   </data>
+  <data name="Must" xml:space="preserve">
+    <value>The specified condition was not met for {PropertyName} value {PropertyValue}.</value>
+  </data>
   <data name="NotNull" xml:space="preserve">
     <value>{PropertyName} value cannot be empty.</value>
   </data>

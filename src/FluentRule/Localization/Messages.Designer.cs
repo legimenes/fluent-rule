@@ -79,6 +79,15 @@ namespace FluentRule.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to The specified condition was not met for {PropertyName} value {PropertyValue}..
+        /// </summary>
+        internal static string Must {
+            get {
+                return ResourceManager.GetString("Must", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to {PropertyName} value cannot be empty..
         /// </summary>
         internal static string NotNull {
