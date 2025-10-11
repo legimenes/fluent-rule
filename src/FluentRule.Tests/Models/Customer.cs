@@ -32,6 +32,10 @@ public class Customer(
 
         // (2)
         Contract<Customer> contract = new(customer);
+        contract.When(x => x.Age > 20 && x.Age < 30, () =>
+        {
+            contract.RuleFor(p => p.FullName).NotNullOrEmpty();
+        });
         contract.RuleFor(p => p.FullName).NotNullOrEmpty();
         contract.RuleFor(p => p.FullName).NotNullOrEmpty().WithMessage("Fullname is required. Actual is {Value}").MinimumLength(3);//.WithMessage("Fullname invalid min length");
         contract.RuleFor(p => p.Document).When(p => p.Document.StartsWith('1')).MinimumLength(15).WithMessage("Invalid Document");

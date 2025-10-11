@@ -28,6 +28,18 @@ public class Contract<T>(T instance)
         return new StringRule<T>(propertyName, expression.Compile(), this);
     }
 
+    public Contract<T> When(Expression<Func<T, bool>> condition, Action action)
+    {
+        var compiledCondition = condition.Compile();
+
+        if (compiledCondition(Instance))
+        {
+            action();
+        }
+
+        return this;
+    }
+
     //public IDictionary<string, List<string>> GroupedNotifications()
     //{
     //    return _notifications
