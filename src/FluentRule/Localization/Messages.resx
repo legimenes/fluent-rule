@@ -117,10 +117,16 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="MinimumLength" xml:space="preserve">
+    <value>{PropertyName} value length must be at least {MinimumLength} characters. {TotalLength} characters were entered.</value>
+  </data>
   <data name="NotNull" xml:space="preserve">
-    <value>The {PropertyName} value cannot be null</value>
+    <value>{PropertyName} value cannot be empty.</value>
   </data>
   <data name="NotNullOrEmpty" xml:space="preserve">
-    <value>{PropertyName} cannot be null or empty</value>
+    <value>{PropertyName} value cannot be empty.</value>
+  </data>
+  <data name="NotNullOrWhiteSpace" xml:space="preserve">
+    <value>{PropertyName} value cannot be empty.</value>
   </data>
 </root>

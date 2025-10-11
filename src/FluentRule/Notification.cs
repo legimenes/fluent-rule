@@ -4,6 +4,7 @@ public class Notification
     public string? Key { get; }
     public object? Value { get; }    
     public string Message { get => _message; }
+    public IReadOnlyDictionary<string, object?> PlaceHolders { get => _placeholders; }
 
     private string _message = string.Empty;
     private readonly IReadOnlyDictionary<string, object?> _placeholders;

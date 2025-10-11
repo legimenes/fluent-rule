@@ -1,38 +1,24 @@
 ﻿using FluentRule.Localization;
 using FluentRule.Rules;
-using System.Text.RegularExpressions;
 
 namespace FluentRule.RuleExtensions;
 public static class StringRuleExtensions
 {
-    public static StringRule<T> HasMinLength<T>(this StringRule<T> rule, int minLength)
+    public static StringRule<T> MinimumLength<T>(this StringRule<T> rule, int minimumLength)
     {
         if (rule.ShouldValidate())
         {
-            var value = rule.GetValue();
-            if (string.IsNullOrEmpty(value) || value.Length < minLength)
+            string value = rule.GetValue();
+            if (string.IsNullOrEmpty(value) || value.Length < minimumLength)
             {
-                rule.AddNotification(
-                    "{PropertyName} deve ter pelo menos {MinLength} caracteres. Valor atual: {Value} (tamanho: {TotalLength})",
+                rule.AddNotification(Messages.MinimumLength,
                     new Dictionary<string, object?>
                     {
-                        ["MinLength"] = minLength,
-                        ["TotalLength"] = value?.Length ?? 0
+                        [Constants.PlaceHolders.PropertyName] = rule.GetPropertyName(),
+                        [Constants.PlaceHolders.PropertyValue] = value,
+                        [Constants.PlaceHolders.MinimumLength] = minimumLength,
+                        [Constants.PlaceHolders.TotalLength] = value?.Length ?? 0
                     });
-            }
-        }
-        return rule;
-    }
-
-    public static StringRule<T> IsEmail<T>(this StringRule<T> rule)
-    {
-        if (rule.ShouldValidate())
-        {
-            var value = rule.GetValue();
-            if (!string.IsNullOrEmpty(value) &&
-                !Regex.IsMatch(value, @"^[^@\s]+@[^@\s]+\.[^@\s]+$"))
-            {
-                rule.AddNotification("E-mail inválido");
             }
         }
         return rule;
@@ -44,8 +30,12 @@ public static class StringRuleExtensions
         {
             string value = rule.GetValue();
             if (value is null)
-                //rule.AddNotification(MessageManager.Get("NotNull"));
-                rule.AddNotification(Messages.NotNull);
+                rule.AddNotification(Messages.NotNull,
+                    new Dictionary<string, object?>
+                    {
+                        [Constants.PlaceHolders.PropertyName] = rule.GetPropertyName(),
+                        [Constants.PlaceHolders.PropertyValue] = value
+                    });
         }
         return rule;
     }
@@ -54,10 +44,14 @@ public static class StringRuleExtensions
     {
         if (rule.ShouldValidate())
         {
-            var value = rule.GetValue();
+            string value = rule.GetValue();
             if (string.IsNullOrEmpty(value))
-                //rule.AddNotification(MessageManager.Get("NotNullOrEmpty"));
-                rule.AddNotification(Messages.NotNullOrEmpty);
+                rule.AddNotification(Messages.NotNullOrEmpty,
+                    new Dictionary<string, object?>
+                    {
+                        [Constants.PlaceHolders.PropertyName] = rule.GetPropertyName(),
+                        [Constants.PlaceHolders.PropertyValue] = value
+                    });
         }
         return rule;
     }
@@ -68,8 +62,27 @@ public static class StringRuleExtensions
         {
             string value = rule.GetValue();
             if (string.IsNullOrWhiteSpace(value))
-                rule.AddNotification("O valor não pode ser nulo ou com espaços em branco.");
+                rule.AddNotification(Messages.NotNullOrWhiteSpace,
+                    new Dictionary<string, object?>
+                    {
+                        [Constants.PlaceHolders.PropertyName] = rule.GetPropertyName(),
+                        [Constants.PlaceHolders.PropertyValue] = value
+                    });
         }
         return rule;
     }
+
+    //public static StringRule<T> IsEmail<T>(this StringRule<T> rule)
+    //{
+    //    if (rule.ShouldValidate())
+    //    {
+    //        var value = rule.GetValue();
+    //        if (!string.IsNullOrEmpty(value) &&
+    //            !Regex.IsMatch(value, @"^[^@\s]+@[^@\s]+\.[^@\s]+$"))
+    //        {
+    //            rule.AddNotification("E-mail inválido");
+    //        }
+    //    }
+    //    return rule;
+    //}
 }

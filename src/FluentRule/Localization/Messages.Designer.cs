@@ -61,7 +61,16 @@ namespace FluentRule.Localization {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to The {PropertyName} value cannot be null.
+        ///   Looks up a localized string similar to {PropertyName} value length must be at least {MinimumLength} characters. {TotalLength} characters were entered..
+        /// </summary>
+        internal static string MinimumLength {
+            get {
+                return ResourceManager.GetString("MinimumLength", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to {PropertyName} value cannot be empty..
         /// </summary>
         internal static string NotNull {
             get {
@@ -70,11 +79,20 @@ namespace FluentRule.Localization {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to {PropertyName} cannot be null or empty.
+        ///   Looks up a localized string similar to {PropertyName} value cannot be empty..
         /// </summary>
         internal static string NotNullOrEmpty {
             get {
                 return ResourceManager.GetString("NotNullOrEmpty", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to {PropertyName} value cannot be empty..
+        /// </summary>
+        internal static string NotNullOrWhiteSpace {
+            get {
+                return ResourceManager.GetString("NotNullOrWhiteSpace", resourceCulture);
             }
         }
     }

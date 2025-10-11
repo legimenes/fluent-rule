@@ -1,6 +1,4 @@
-﻿using FluentRule.Localization;
-using FluentRule.RuleExtensions;
-using System.Globalization;
+﻿using FluentRule.RuleExtensions;
 
 namespace FluentRule.Tests.Models;
 public class Customer(
@@ -35,8 +33,8 @@ public class Customer(
         // (2)
         Contract<Customer> contract = new(customer);
         contract.RuleFor(p => p.FullName).NotNullOrEmpty();
-        contract.RuleFor(p => p.FullName).NotNullOrEmpty().WithMessage("Fullname is required. Actual is {Value}").HasMinLength(3);//.WithMessage("Fullname invalid min length");
-        contract.RuleFor(p => p.Document).When(p => p.Document.StartsWith("1")).HasMinLength(15).WithMessage("Invalid Document");
+        contract.RuleFor(p => p.FullName).NotNullOrEmpty().WithMessage("Fullname is required. Actual is {Value}").MinimumLength(3);//.WithMessage("Fullname invalid min length");
+        contract.RuleFor(p => p.Document).When(p => p.Document.StartsWith('1')).MinimumLength(15).WithMessage("Invalid Document");
         contract.RuleFor(p => p.PersonType).Satisfies(p => p > -1).WithMessage("Invalid PersonType");
 
         customer.AddNotifications(contract.Notifications);

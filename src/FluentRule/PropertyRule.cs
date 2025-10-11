@@ -30,6 +30,11 @@ public class PropertyRule<T, TProperty, TSelf>(
         return _accessor(_parent.Instance);
     }
 
+    public string GetPropertyName()
+    {
+        return _propertyName;
+    }
+
     public TSelf WithMessage(string message)
     {
         if (_lastNotification is not null)
