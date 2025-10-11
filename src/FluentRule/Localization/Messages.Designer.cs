@@ -61,6 +61,15 @@ namespace FluentRule.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to {PropertyName} has a range of values which does not include &apos;{PropertyValue}&apos;..
+        /// </summary>
+        internal static string IsEnumName {
+            get {
+                return ResourceManager.GetString("IsEnumName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to {PropertyName} value length must be at least {MinimumLength} characters. {TotalLength} characters were entered..
         /// </summary>
         internal static string MinimumLength {

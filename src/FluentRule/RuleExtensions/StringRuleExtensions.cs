@@ -4,6 +4,45 @@ using FluentRule.Rules;
 namespace FluentRule.RuleExtensions;
 public static class StringRuleExtensions
 {
+    public static StringRule<T> IsEnumName<T>(this StringRule<T> rule, Type enumType, bool caseSensitive = true)
+    {
+        if (rule.ShouldValidate())
+        {
+            string value = rule.GetValue();
+            if (!string.IsNullOrEmpty(value))
+            {
+                bool isValid = Enum.TryParse(enumType, value, !caseSensitive, out var _)
+                    && Enum.GetNames(enumType)
+                           .Any(n => string.Equals(n, value, caseSensitive
+                               ? StringComparison.Ordinal
+                               : StringComparison.OrdinalIgnoreCase));
+
+                if (!isValid)
+                {
+                    rule.AddNotification(Messages.IsEnumName,
+                        new Dictionary<string, object?>
+                        {
+                            [Constants.PlaceHolders.PropertyName] = rule.GetPropertyName(),
+                            [Constants.PlaceHolders.PropertyValue] = value,
+                            [Constants.PlaceHolders.EnumType] = enumType.Name
+                        });
+                }
+            }
+            else
+            {
+                rule.AddNotification(Messages.IsEnumName,
+                    new Dictionary<string, object?>
+                    {
+                        [Constants.PlaceHolders.PropertyName] = rule.GetPropertyName(),
+                        [Constants.PlaceHolders.PropertyValue] = value,
+                        [Constants.PlaceHolders.EnumType] = enumType.Name
+                    });
+            }
+        }
+
+        return rule;
+    }
+
     public static StringRule<T> MinimumLength<T>(this StringRule<T> rule, int minimumLength)
     {
         if (rule.ShouldValidate())

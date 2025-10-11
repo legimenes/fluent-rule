@@ -4,6 +4,7 @@ internal class CustomerBuilder
     private Guid _id = new();
     private string _fullName = "Fulano de Tal";
     private int _personType = 1;
+    private string _personTypeDescription = "Juridica";
     private string _document = "12233445567";
     private int _age = 30;
     private DateTime _creationDate = DateTime.Now.AddMonths(-5);
@@ -23,6 +24,12 @@ internal class CustomerBuilder
     public CustomerBuilder WithPersonType(int personType)
     {
         _personType = personType;
+        return this;
+    }
+
+    public CustomerBuilder WithPersonType(string personTypeDescription)
+    {
+        _personTypeDescription = personTypeDescription;
         return this;
     }
 
@@ -50,6 +57,7 @@ internal class CustomerBuilder
             id: _id,
             fullName: _fullName,
             personType: _personType,
+            personTypeDescription: _personTypeDescription,
             document: _document,
             age: _age,
             creationDate: _creationDate);

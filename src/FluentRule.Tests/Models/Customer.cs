@@ -1,10 +1,12 @@
 ﻿using FluentRule.RuleExtensions;
 
 namespace FluentRule.Tests.Models;
+
 public class Customer(
     Guid id,
     string fullName,
     int personType,
+    string personTypeDescription,
     string document,
     int age,
     DateTime creationDate) : Notifiable
@@ -12,6 +14,7 @@ public class Customer(
     public Guid Id { get; private set; } = id;
     public string FullName { get; set; } = fullName;
     public int PersonType { get; set; } = personType;
+    public string PersonTypeDescription { get; set; } = personTypeDescription;
     public string Document { get; set; } = document;
     public int Age { get; set; } = age;
     public DateTime CreationDate { get; set; } = creationDate;
@@ -19,11 +22,12 @@ public class Customer(
     public static Customer Create(
         string fullName,
         int personType,
+        string personTypeDescription,
         string document,
         int age,
         DateTime originDate)
     {
-        Customer customer = new(new Guid(), fullName, personType, document, age, originDate);
+        Customer customer = new(new Guid(), fullName, personType, personTypeDescription, document, age, originDate);
 
         // (1)
         customer.AddNotification("Testando msg padrao");
@@ -32,6 +36,7 @@ public class Customer(
 
         // (2)
         Contract<Customer> contract = new(customer);
+        contract.RuleFor(p => p.PersonTypeDescription).IsEnumName(typeof(PersonType));
         contract.When(x => x.Age > 20 && x.Age < 30, () =>
         {
             contract.RuleFor(p => p.FullName).NotNullOrEmpty();
@@ -42,6 +47,8 @@ public class Customer(
         contract.RuleFor(p => p.PersonType).Satisfies(p => p > -1).WithMessage("Invalid PersonType");
 
         customer.AddNotifications(contract.Notifications);
+
+        
 
         return customer;
     }
