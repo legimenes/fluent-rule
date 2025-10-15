@@ -36,6 +36,12 @@ public class Customer(
 
         // (2)
         Contract<Customer> contract = new(customer);
+        contract.RuleFor(p => p.PersonType).Custom((pp, ctx) =>
+        {
+            var customer = ctx.Instance;
+            if (customer.PersonType == -1)
+                ctx.AddNotification("Erro 1");
+        });
         contract.RuleFor(p => p.PersonType).Must(p =>
         {
             bool isInvalid = p == -1;
@@ -54,8 +60,6 @@ public class Customer(
         contract.RuleFor(p => p.PersonType).Must(p => p > -1).WithMessage("Invalid PersonType");
 
         customer.AddNotifications(contract.Notifications);
-
-        
 
         return customer;
     }

@@ -8,18 +8,62 @@ public static class GenericRuleExtensions
     public static TSelf Must<T, TProperty, TSelf>(this PropertyRule<T, TProperty, TSelf> rule, Func<TProperty, bool> predicate)
         where TSelf : PropertyRule<T, TProperty, TSelf>
     {
-        if (rule.ShouldValidate())
+        if (!rule.ShouldValidate())
+            return (TSelf)rule;
+
+        TProperty? value = rule.GetValue();
+        if (!predicate(value))
         {
-            TProperty? value = rule.GetValue();
-            if (!predicate(value))
+            rule.AddNotification(Messages.Must,
+                new Dictionary<string, object?>
+                {
+                    [Constants.PlaceHolders.PropertyName] = rule.GetPropertyName(),
+                    [Constants.PlaceHolders.PropertyValue] = value
+                });
+        }
+        return (TSelf)rule;
+    }
+
+    public static TSelf Custom<T, TProperty, TSelf>(
+        this PropertyRule<T, TProperty, TSelf> rule,
+        Action<TProperty?, ValidationContext<T>> customAction)
+        where TSelf : PropertyRule<T, TProperty, TSelf>
+    {
+        if (!rule.ShouldValidate())
+            return (TSelf)rule;
+
+        TProperty? value = rule.GetValue();
+        T instance = rule.ParentInstance!;
+
+        ValidationContext<T> ctx = new (instance, (message, metadata) =>
+        {
+            if (metadata == null)
             {
-                rule.AddNotification(Messages.Must,
-                    new Dictionary<string, object?>
-                    {
-                        [Constants.PlaceHolders.PropertyName] = rule.GetPropertyName(),
-                        [Constants.PlaceHolders.PropertyValue] = value
-                    });
+                metadata = new Dictionary<string, object?>()
+                {
+                    [Constants.PlaceHolders.PropertyName] = rule.GetPropertyName(),
+                    [Constants.PlaceHolders.PropertyValue] = value
+                };
             }
+            else if (!metadata.ContainsKey(Constants.PlaceHolders.PropertyName))
+                metadata[Constants.PlaceHolders.PropertyName] = rule.GetPropertyName();
+
+            rule.AddNotification(message, metadata);
+        });
+
+        try
+        {
+            customAction(value, ctx);
+        }
+        catch (Exception ex)
+        {
+            rule.AddNotification(Messages.CustomError, new Dictionary<string, object?>
+            {
+                [Constants.PlaceHolders.CustomError] = ex.Message,
+                [Constants.PlaceHolders.PropertyName] = rule.GetPropertyName(),
+                [Constants.PlaceHolders.PropertyValue] = value
+            });
+            return (TSelf)rule;
         }
         return (TSelf)rule;
     }

@@ -3,6 +3,7 @@ internal class Constants
 {
     internal class PlaceHolders
     {
+        internal const string CustomError = "CustomError";
         internal const string EnumType = "EnumType";
         internal const string MinimumLength = "MinimumLength";
         internal const string PropertyName = "PropertyName";

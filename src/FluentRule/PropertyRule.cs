@@ -7,6 +7,8 @@ public class PropertyRule<T, TProperty, TSelf>(
     Contract<T> parent)
     where TSelf : PropertyRule<T, TProperty, TSelf>
 {
+    public T ParentInstance => _parent.Instance;
+
     protected readonly string _propertyName = propertyName;
     protected readonly Func<T, TProperty> _accessor = accessor;
     protected readonly Contract<T> _parent = parent;
@@ -37,10 +39,7 @@ public class PropertyRule<T, TProperty, TSelf>(
 
     public TSelf WithMessage(string message)
     {
-        if (_lastNotification is not null)
-        {
-            _lastNotification.OverrideMessage(message);
-        }
+        _lastNotification?.OverrideMessage(message);
         return (TSelf)this;
     }
 

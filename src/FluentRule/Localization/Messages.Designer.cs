@@ -61,6 +61,15 @@ namespace FluentRule.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to An error occurred while running custom validation.
+        /// </summary>
+        internal static string CustomError {
+            get {
+                return ResourceManager.GetString("CustomError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to {PropertyName} has a range of values which does not include &apos;{PropertyValue}&apos;..
         /// </summary>
         internal static string IsEnumName {
