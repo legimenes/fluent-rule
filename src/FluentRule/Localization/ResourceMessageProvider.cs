@@ -13,8 +13,8 @@ public class ResourceMessageProvider : IMessageProvider
 
     public string GetMessage(string key)
     {
-        var culture = CultureInfo.CurrentUICulture;
-        var message = _resourceManager.GetString(key, culture);
+        CultureInfo culture = CultureInfo.CurrentUICulture;
+        string? message = _resourceManager.GetString(key, culture);
 
         if (string.IsNullOrEmpty(message))
             message = _resourceManager.GetString(key, new CultureInfo("en-US")) ?? key;

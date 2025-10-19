@@ -1,9 +1,16 @@
+using FluentRule.Tests.Extensions;
 using FluentRule.Tests.Models;
 
 namespace FluentRule.Tests;
 
 public class UnitTest1
 {
+    public UnitTest1()
+    {
+        FluentRuleOptions.GlobalOptions.SetLanguage("pt-BR");
+        FluentRuleOptions.GlobalOptions.UseProvider(new JsonMessageProvider("./Messages"));
+    }
+
     [Fact]
     public void Test1()
     {

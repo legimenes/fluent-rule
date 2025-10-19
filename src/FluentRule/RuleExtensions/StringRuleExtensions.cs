@@ -19,7 +19,7 @@ public static class StringRuleExtensions
 
                 if (!isValid)
                 {
-                    rule.AddNotification(Messages.IsEnumName,
+                    rule.AddNotification(LocalizedMessages.IsEnumName,
                         new Dictionary<string, object?>
                         {
                             [Constants.PlaceHolders.PropertyName] = rule.GetPropertyName(),
@@ -30,7 +30,7 @@ public static class StringRuleExtensions
             }
             else
             {
-                rule.AddNotification(Messages.IsEnumName,
+                rule.AddNotification(LocalizedMessages.IsEnumName,
                     new Dictionary<string, object?>
                     {
                         [Constants.PlaceHolders.PropertyName] = rule.GetPropertyName(),
@@ -50,7 +50,7 @@ public static class StringRuleExtensions
             string value = rule.GetValue();
             if (string.IsNullOrEmpty(value) || value.Length < minimumLength)
             {
-                rule.AddNotification(Messages.MinimumLength,
+                rule.AddNotification(LocalizedMessages.MinimumLength,
                     new Dictionary<string, object?>
                     {
                         [Constants.PlaceHolders.PropertyName] = rule.GetPropertyName(),
@@ -69,7 +69,7 @@ public static class StringRuleExtensions
         {
             string value = rule.GetValue();
             if (value is null)
-                rule.AddNotification(Messages.NotNull,
+                rule.AddNotification(LocalizedMessages.NotNull,
                     new Dictionary<string, object?>
                     {
                         [Constants.PlaceHolders.PropertyName] = rule.GetPropertyName(),
@@ -85,7 +85,7 @@ public static class StringRuleExtensions
         {
             string value = rule.GetValue();
             if (string.IsNullOrEmpty(value))
-                rule.AddNotification(Messages.NotNullOrEmpty,
+                rule.AddNotification(LocalizedMessages.NotNullOrEmpty,
                     new Dictionary<string, object?>
                     {
                         [Constants.PlaceHolders.PropertyName] = rule.GetPropertyName(),
@@ -101,7 +101,7 @@ public static class StringRuleExtensions
         {
             string value = rule.GetValue();
             if (string.IsNullOrWhiteSpace(value))
-                rule.AddNotification(Messages.NotNullOrWhiteSpace,
+                rule.AddNotification(LocalizedMessages.NotNullOrWhiteSpace,
                     new Dictionary<string, object?>
                     {
                         [Constants.PlaceHolders.PropertyName] = rule.GetPropertyName(),

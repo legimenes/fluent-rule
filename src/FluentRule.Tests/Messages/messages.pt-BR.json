@@ -1,0 +1,6 @@
+{
+  "NotNull": "'{PropertyName}' não pode ser nuloo.",
+  "NotNullOrEmpty": "'{PropertyName}' não pode ser nulo ou vazioo.",
+  "MinimumLength": "'{PropertyName}' deve ter pelo menos {MinimumLength} caracteress.",
+  "Must": "'{PropertyName}' deve satisfazer a condiçãoo."
+}
