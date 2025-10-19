@@ -1,6 +1,7 @@
 ﻿namespace FluentRule.Localization;
 public static class LocalizedMessages
 {
+    public static string CustomError => MessageManager.Provider.GetMessage(nameof(CustomError));
     public static string IsEnumName => MessageManager.Provider.GetMessage(nameof(IsEnumName));
     public static string MinimumLength => MessageManager.Provider.GetMessage(nameof(MinimumLength));
     public static string Must => MessageManager.Provider.GetMessage(nameof(Must));

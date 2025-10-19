@@ -22,8 +22,8 @@ public static class StringRuleExtensions
                     rule.AddNotification(LocalizedMessages.IsEnumName,
                         new Dictionary<string, object?>
                         {
-                            [Constants.PlaceHolders.PropertyName] = rule.GetPropertyName(),
-                            [Constants.PlaceHolders.PropertyValue] = value,
+                            [Constants.PlaceHolders.Key] = rule.GetPropertyName(),
+                            [Constants.PlaceHolders.Value] = value,
                             [Constants.PlaceHolders.EnumType] = enumType.Name
                         });
                 }
@@ -33,8 +33,8 @@ public static class StringRuleExtensions
                 rule.AddNotification(LocalizedMessages.IsEnumName,
                     new Dictionary<string, object?>
                     {
-                        [Constants.PlaceHolders.PropertyName] = rule.GetPropertyName(),
-                        [Constants.PlaceHolders.PropertyValue] = value,
+                        [Constants.PlaceHolders.Key] = rule.GetPropertyName(),
+                        [Constants.PlaceHolders.Value] = value,
                         [Constants.PlaceHolders.EnumType] = enumType.Name
                     });
             }
@@ -53,8 +53,8 @@ public static class StringRuleExtensions
                 rule.AddNotification(LocalizedMessages.MinimumLength,
                     new Dictionary<string, object?>
                     {
-                        [Constants.PlaceHolders.PropertyName] = rule.GetPropertyName(),
-                        [Constants.PlaceHolders.PropertyValue] = value,
+                        [Constants.PlaceHolders.Key] = rule.GetPropertyName(),
+                        [Constants.PlaceHolders.Value] = value,
                         [Constants.PlaceHolders.MinimumLength] = minimumLength,
                         [Constants.PlaceHolders.TotalLength] = value?.Length ?? 0
                     });
@@ -72,8 +72,8 @@ public static class StringRuleExtensions
                 rule.AddNotification(LocalizedMessages.NotNull,
                     new Dictionary<string, object?>
                     {
-                        [Constants.PlaceHolders.PropertyName] = rule.GetPropertyName(),
-                        [Constants.PlaceHolders.PropertyValue] = value
+                        [Constants.PlaceHolders.Key] = rule.GetPropertyName(),
+                        [Constants.PlaceHolders.Value] = value
                     });
         }
         return rule;
@@ -88,8 +88,8 @@ public static class StringRuleExtensions
                 rule.AddNotification(LocalizedMessages.NotNullOrEmpty,
                     new Dictionary<string, object?>
                     {
-                        [Constants.PlaceHolders.PropertyName] = rule.GetPropertyName(),
-                        [Constants.PlaceHolders.PropertyValue] = value
+                        [Constants.PlaceHolders.Key] = rule.GetPropertyName(),
+                        [Constants.PlaceHolders.Value] = value
                     });
         }
         return rule;
@@ -104,8 +104,8 @@ public static class StringRuleExtensions
                 rule.AddNotification(LocalizedMessages.NotNullOrWhiteSpace,
                     new Dictionary<string, object?>
                     {
-                        [Constants.PlaceHolders.PropertyName] = rule.GetPropertyName(),
-                        [Constants.PlaceHolders.PropertyValue] = value
+                        [Constants.PlaceHolders.Key] = rule.GetPropertyName(),
+                        [Constants.PlaceHolders.Value] = value
                     });
         }
         return rule;

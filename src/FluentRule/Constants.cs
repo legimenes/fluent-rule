@@ -6,8 +6,8 @@ internal class Constants
         internal const string CustomError = "CustomError";
         internal const string EnumType = "EnumType";
         internal const string MinimumLength = "MinimumLength";
-        internal const string PropertyName = "PropertyName";
-        internal const string PropertyValue = "PropertyValue";
+        internal const string Key = "Key";
+        internal const string Value = "Value";
         internal const string TotalLength = "TotalLength";
     }
 }

@@ -14,11 +14,11 @@ public static class GenericRuleExtensions
         TProperty? value = rule.GetValue();
         if (!predicate(value))
         {
-            rule.AddNotification(Messages.Must,
+            rule.AddNotification(LocalizedMessages.Must,
                 new Dictionary<string, object?>
                 {
-                    [Constants.PlaceHolders.PropertyName] = rule.GetPropertyName(),
-                    [Constants.PlaceHolders.PropertyValue] = value
+                    [Constants.PlaceHolders.Key] = rule.GetPropertyName(),
+                    [Constants.PlaceHolders.Value] = value
                 });
         }
         return (TSelf)rule;
@@ -41,12 +41,12 @@ public static class GenericRuleExtensions
             {
                 metadata = new Dictionary<string, object?>()
                 {
-                    [Constants.PlaceHolders.PropertyName] = rule.GetPropertyName(),
-                    [Constants.PlaceHolders.PropertyValue] = value
+                    [Constants.PlaceHolders.Key] = rule.GetPropertyName(),
+                    [Constants.PlaceHolders.Value] = value
                 };
             }
-            else if (!metadata.ContainsKey(Constants.PlaceHolders.PropertyName))
-                metadata[Constants.PlaceHolders.PropertyName] = rule.GetPropertyName();
+            else if (!metadata.ContainsKey(Constants.PlaceHolders.Key))
+                metadata[Constants.PlaceHolders.Key] = rule.GetPropertyName();
 
             rule.AddNotification(message, metadata);
         });
@@ -57,11 +57,11 @@ public static class GenericRuleExtensions
         }
         catch (Exception ex)
         {
-            rule.AddNotification(Messages.CustomError, new Dictionary<string, object?>
+            rule.AddNotification(LocalizedMessages.CustomError, new Dictionary<string, object?>
             {
                 [Constants.PlaceHolders.CustomError] = ex.Message,
-                [Constants.PlaceHolders.PropertyName] = rule.GetPropertyName(),
-                [Constants.PlaceHolders.PropertyValue] = value
+                [Constants.PlaceHolders.Key] = rule.GetPropertyName(),
+                [Constants.PlaceHolders.Value] = value
             });
             return (TSelf)rule;
         }

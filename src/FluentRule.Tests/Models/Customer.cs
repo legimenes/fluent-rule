@@ -32,6 +32,8 @@ public class Customer(
         // (1)
         customer.AddNotification("Testando msg padrao");
 
+        Notification n = new("");
+
         //MessageManager.CurrentLanguage = "pt-BR";
 
         // (2)
